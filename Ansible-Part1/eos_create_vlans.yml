@@ -1,0 +1,19 @@
+- hosts: 
+   - leafs
+  gather_facts: no
+  tasks: 
+  - name: Add VLAN
+    eos_config:
+      commands:
+        - vlan 10
+     # parents: vlan 10
+      replace: block
+      save_when: changed
+  - name: Name the VLAN
+    eos_config:
+      commands:
+        - name DMZ
+      parents: vlan 10
+      replace: block
+      save_when: changed
+
