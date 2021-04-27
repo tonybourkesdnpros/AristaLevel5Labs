@@ -1,9 +1,0 @@
----
-- hosts: leaf1-DC1
-  tasks: 
-  - name: evaluate text output
-    eos_command:
-      commands:
-        - show version
-    register: show_ver
-  - debug: var=show_ver
