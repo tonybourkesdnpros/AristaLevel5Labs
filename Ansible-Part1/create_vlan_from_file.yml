@@ -1,0 +1,7 @@
+---
+- hosts: leafs_DC1, leafs_DC2
+  gather_facts: no
+  tasks: 
+  - name: Create VLANs from file
+    eos_config:
+      src: vlan.cfg

@@ -1,0 +1,9 @@
+---
+  - hosts: leaf1-DC1
+    gather_facts: 'no'
+    tasks:
+    - name: Configure l099
+      arista.eos.eos_l3_interfaces:
+        config:
+          - name: loopback99
+        state: deleted

@@ -1,0 +1,11 @@
+---
+  - hosts: leaf1-DC1
+    gather_facts: no
+    tasks:
+    - name: Add VLAN
+      eos_command:
+        lines: 
+          - vlan 4000
+          -   name Extra_VLAN
+        
+    
