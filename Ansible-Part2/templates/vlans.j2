@@ -1,0 +1,12 @@
+{# This creates the VLAN database entries #}
+
+{% for num in range(4004,4008) %}
+vlan {{num}}
+   name VLAN{{num}}_Jinja
+{% endfor %}
+
+{# This creates the SVIs #}
+{% for num in range(4004,4008) %}
+interface vlan{{num}}
+   description VLAN{{num}} created by Ansible and Jinja
+{% endfor %}
