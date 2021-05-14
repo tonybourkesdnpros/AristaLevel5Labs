@@ -4,7 +4,7 @@
   tasks:
   - name: Register variables
     include_vars:
-      file: "{{lookup('env','PWD')}}/vars/underlay-DC1.yml"
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
       name: underlay
   - name: Create Spine config
     template:
