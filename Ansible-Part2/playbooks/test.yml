@@ -1,0 +1,15 @@
+---
+- hosts: leaf1-DC1
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DC1.yml"
+      name: underlay
+  - name: Test variables
+    debug:
+      msg: "{{ underlay[inventory_hostname]['interfaces']['Ethernet3']['ipv4'] }}"
+  - name: Create a configuration for Ethernet3
+    template:
+      src: "{{lookup('env','PWD')}}/templates/interface.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_underlay.cfg"

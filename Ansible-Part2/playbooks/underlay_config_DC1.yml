@@ -1,0 +1,30 @@
+---
+- hosts: spines_DC1
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DC1.yml"
+      name: underlay
+  - name: Create Spine config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/spine-underlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"
+- hosts: leafs_DC1
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DC1.yml"
+      name: underlay
+  - name: Create config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/leaf-underlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+  

@@ -1,0 +1,39 @@
+service routing protocols model multi-agent
+
+{% for item in underlay[inventory_hostname]['interfaces'] %}
+interface {{ item }}
+   ip address {{ underlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][item]['mask']}}
+   {% if 'Ethernet' in item %}
+   no switchport
+   {% endif %}
+{% endfor %}
+
+ip prefix-list LOOPBACK
+    seq 10 permit 192.168.101.0/24 eq 32
+    seq 11 permit 192.168.102.0/24 eq 32
+
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+
+peer-filter LEAF-AS-RANGE
+ 10 match as-range 65000-65535 result accept
+
+router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}
+   no bgp default ipv4-unicast
+   maximum-paths 3
+   distance bgp 20 200 200
+
+
+
+   bgp listen range 192.168.0.0/16 peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+   neighbor LEAF_Underlay peer group
+   neighbor LEAF_Underlay send-community
+   neighbor LEAF_Underlay maximum-routes 12000
+
+   redistribute connected route-map LOOPBACK
+   
+   address-family ipv4
+     neighbor LEAF_Underlay activate
+     redistribute connected route-map LOOPBACK
+     

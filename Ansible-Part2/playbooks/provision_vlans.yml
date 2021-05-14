@@ -9,3 +9,5 @@
   - name: Upload config
     eos_config:
       src: "{{lookup('env','PWD')}}/configs/vlans.cfg"
+
+
