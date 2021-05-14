@@ -18,13 +18,13 @@
   tasks:
   - name: Register variables
     include_vars:
-      file: "{{lookup('env','PWD')}}/vars/underlay-DC1.yml"
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
       name: underlay
   - name: Create config
     template:
       src: "{{lookup('env','PWD')}}/templates/leaf-underlay.j2"
       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
-  - name: Upload config
-    eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+#  - name: Upload config
+#    eos_config:
+#      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
   
