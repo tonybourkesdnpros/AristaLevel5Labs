@@ -5,6 +5,3 @@
   - name: Accept SSH key for each host 
     connection: local
     shell: "ssh-keyscan -H {{ inventory_hostname|lower }} >> ~/.ssh/known_hosts"
-  - name: What's the hostname?
-    debug:
-      msg: "ssh-keyscan -H {{ inventory_hostname|lower }} >> ~/.ssh/known_hosts"
