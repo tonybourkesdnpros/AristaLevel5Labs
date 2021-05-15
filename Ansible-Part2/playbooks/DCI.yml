@@ -1,0 +1,7 @@
+---
+- hosts: DCI
+  gather_facts: no
+  tasks:
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/DCI.cfg"

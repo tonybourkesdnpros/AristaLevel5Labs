@@ -1,5 +1,5 @@
 ---
-- hosts: spines_DC1
+- hosts: spines_DC2
   gather_facts: no
   tasks:
   - name: Register variables
@@ -13,7 +13,7 @@
   - name: Upload config
     eos_config:
       src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"
-- hosts: leafs_DC1
+- hosts: leafs_DC2
   gather_facts: no
   tasks:
   - name: Register variables
@@ -27,7 +27,7 @@
   - name: Upload config
     eos_config:
       src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
-- hosts: borderleafs_DC1
+- hosts: borderleafs_DC2
   gather_facts: no
   tasks:
   - name: Register variables
@@ -40,4 +40,5 @@
       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"
   - name: Upload config
     eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"       
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"      
+  

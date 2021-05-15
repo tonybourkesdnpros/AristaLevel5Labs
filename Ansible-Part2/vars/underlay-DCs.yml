@@ -102,6 +102,7 @@ leaf1-DC1:
       - 192.168.103.1
       - 192.168.103.3
       - 192.168.103.5
+    spine-ASN: 65100
   MLAG: Odd
 leaf2-DC1:
   interfaces:
@@ -126,6 +127,7 @@ leaf2-DC1:
       - 192.168.103.7
       - 192.168.103.9
       - 192.168.103.11
+    spine-ASN: 65100
   MLAG: Even
 leaf3-DC1:
   interfaces:
@@ -150,6 +152,7 @@ leaf3-DC1:
       - 192.168.103.13
       - 192.168.103.15
       - 192.168.103.17
+    spine-ASN: 65100
   MLAG: Even
 leaf4-DC1:
   interfaces:
@@ -174,6 +177,7 @@ leaf4-DC1:
       - 192.168.103.19
       - 192.168.103.21
       - 192.168.103.23
+    spine-ASN: 65100
   MLAG: Odd
 borderleaf1-DC1:
   interfaces:
@@ -201,7 +205,11 @@ borderleaf1-DC1:
       - 192.168.103.25
       - 192.168.103.27
       - 192.168.103.29
+    spine-ASN: 65100
+    DCI-peers:
+      - 192.168.254.1
   MLAG: Odd
+
 borderleaf2-DC1:
   interfaces:
     loopback0: 
@@ -228,7 +236,11 @@ borderleaf2-DC1:
       - 192.168.103.31
       - 192.168.103.33
       - 192.168.103.35
+    spine-ASN: 65100
+    DCI-peers:
+      - 192.168.254.3
   MLAG: Even
+
 spine1-DC2:
   interfaces:
     loopback0: 
@@ -303,7 +315,7 @@ spine3-DC2:
       ipv4: 192.168.203.35
       mask: 31
   BGP:
-    ASN: 65100
+    ASN: 65200
 leaf1-DC2:
   interfaces:
     loopback0: 
@@ -327,6 +339,7 @@ leaf1-DC2:
       - 192.168.203.1
       - 192.168.203.3
       - 192.168.203.5
+    spine-ASN: 65200
   MLAG: Odd
 leaf2-DC2:
   interfaces:
@@ -351,6 +364,7 @@ leaf2-DC2:
       - 192.168.203.7
       - 192.168.203.9
       - 192.168.203.11
+    spine-ASN: 65200
   MLAG: Even
 leaf3-DC2:
   interfaces:
@@ -375,7 +389,8 @@ leaf3-DC2:
       - 192.168.203.13
       - 192.168.203.15
       - 192.168.203.17
-  MLAG: Even
+    spine-ASN: 65200
+  MLAG: Odd
 leaf4-DC2:
   interfaces:
     loopback0: 
@@ -399,7 +414,8 @@ leaf4-DC2:
       - 192.168.203.19
       - 192.168.203.21
       - 192.168.203.23
-  MLAG: Odd
+    spine-ASN: 65200
+  MLAG: Even
 borderleaf1-DC2:
   interfaces:
     loopback0: 
@@ -417,12 +433,18 @@ borderleaf1-DC2:
     Ethernet5: 
       ipv4: 192.168.203.28
       mask: 31
+    Ethernet12:
+      ipv4: 192.168.254.4
+      mask: 31
   BGP:
     ASN: 65203
     spine-peers:
       - 192.168.203.25
       - 192.168.203.27
       - 192.168.203.29
+    spine-ASN: 65200
+    DCI-peers:
+      - 192.168.254.5
   MLAG: Odd
 borderleaf2-DC2:
   interfaces:
@@ -442,7 +464,7 @@ borderleaf2-DC2:
       ipv4: 192.168.203.34
       mask: 31
     Ethernet12:
-      ipv4: 192.168.301.6
+      ipv4: 192.168.254.6
       mask: 31
   BGP:
     ASN: 65203
@@ -450,4 +472,7 @@ borderleaf2-DC2:
       - 192.168.203.31
       - 192.168.203.33
       - 192.168.203.35
+    spine-ASN: 65200
+    DCI-peers:
+    - 192.168.254.7
   MLAG: Even

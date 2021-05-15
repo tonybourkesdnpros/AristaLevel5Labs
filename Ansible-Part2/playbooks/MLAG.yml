@@ -1,12 +1,12 @@
 ---
-- hosts: leaf1-DC1, leaf3-DC1, borderleaf1-DC1
+- hosts: leaf1-DC1, leaf3-DC1, borderleaf1-DC1, leaf1-DC2, leaf3-DC2, borderleaf1-DC2
   gather_facts: no
   tasks:
   - name: Upload MLAG config
     eos_config:
       src: "/home/coder/project/labfiles/AristaLevel5Labs/Ansible-Part2/configs/MLAG-left.cfg"
 
-- hosts: leaf2-DC1, leaf4-DC1, borderleaf2-DC1
+- hosts: leaf2-DC1, leaf4-DC1, borderleaf2-DC1, leaf2-DC2, leaf4-DC2, borderleaf2-DC2
   gather_facts: no
   tasks:
   - name: Upload MLAG config

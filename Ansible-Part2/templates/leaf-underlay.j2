@@ -3,13 +3,16 @@ interface {{ item }}
    ip address {{ underlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][item]['mask']}}
    {% if 'Ethernet' in item %}
    no switchport
-   mtu {{ underlay[inventory_hostname]['global']['MTU']
+   mtu {{ underlay['global']['MTU'] }}
    {% endif %}
 {% endfor %}
 
 ip prefix-list LOOPBACK
     seq 10 permit 192.168.101.0/24 eq 32
-    seq 11 permit 192.168.102.0/24 eq 32
+    seq 20 permit 192.168.102.0/24 eq 32
+    seq 30 permit 192.168.201.0/24 eq 32
+    seq 40 permit 192.168.202.0/24 eq 32
+    seq 50 permit 192.168.253.0/24 eq 32
 
 
 
@@ -24,7 +27,7 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
 
 
    neighbor SPINE_Underlay peer group  
-   neighbor SPINE_Underlay remote-as {{ underlay['global']['DC1']['spine_ASN'] }}
+   neighbor SPINE_Underlay remote-as {{ underlay[inventory_hostname]['BGP']['spine-ASN'] }}
    neighbor SPINE_Underlay send-community
    neighbor SPINE_Underlay maximum-routes 12000
 
