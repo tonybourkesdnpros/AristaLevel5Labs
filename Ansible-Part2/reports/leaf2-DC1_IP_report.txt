@@ -1,0 +1,7 @@
+This file contains the IP information (a la 'show ip interface brief') for leaf2-DC1
+
+The IP address of loopback0 is 192.168.101.12
+The IP address of loopback1 is 192.168.102.11
+The IP address of Ethernet3 is 192.168.103.6
+The IP address of Ethernet4 is 192.168.103.8
+The IP address of Ethernet5 is 192.168.103.10

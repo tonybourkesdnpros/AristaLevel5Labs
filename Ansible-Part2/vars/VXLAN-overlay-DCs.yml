@@ -1,0 +1,46 @@
+
+Tenants:
+  Picard:
+    L3VNI: 10000
+    L2VNI:
+      DMZ:
+        VNID: 10001
+        VLANID: 101
+        SVI: 10.10.10.1/24
+      Internal:
+        VNID: 10002
+        VLANID: 102
+        SVI: 10.10.20.1/24  
+  Kirk:
+    L3VNI: 20000
+    L2VNI:
+      DMZ:
+        VNID: 20001
+        VLANID: 201
+        SVI: 10.10.10.1/24
+      Internal:
+        VNID: 20002
+        VLANID: 202
+        SVI: 10.10.20.1/24  
+  Janeway:  
+    L3VNI: 30000
+    L2VNI:
+      DMZ:
+        VNID: 30001
+        VLANID: 301
+        SVI: 10.10.10.1/24
+      Internal:
+        VNID: 30002
+        VLANID: 302
+        SVI: 10.10.20.1/24
+  Pike:
+    L3VNI: 40000
+    L2VNI: 
+      DMZ: 
+        VNID: 40001
+        VLANID: 401
+        SVI: 10.10.200.1/24
+      Backup:
+        VNID: 40004
+        VLANID: 402
+        SVI: 10.10.100.1/24

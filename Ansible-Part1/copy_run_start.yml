@@ -5,4 +5,4 @@
   - name: Save config
     eos_command:
       commands:
-        - copy run start
+        - 

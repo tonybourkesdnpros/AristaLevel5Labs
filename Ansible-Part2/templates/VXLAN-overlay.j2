@@ -1,0 +1,60 @@
+!vrf
+{% for Tenant in VXLAN['Tenants'] %}
+  vrf instance {{ Tenant }} 
+  ip routing vrf {{ Tenant }}
+{%endfor%}
+
+
+!VLANs
+{% for Tenant in VXLAN['Tenants'] %}
+{%   for L2VNI in VXLAN['Tenants'][Tenant]['L2VNI']%}
+VLAN {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VLANID']}}
+{%endfor%}
+{%endfor%}
+
+
+
+{% for Tenant in VXLAN['Tenants'] %}
+{%   for L2VNI in VXLAN['Tenants'][Tenant]['L2VNI']%}
+interface vlan {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VLANID']}}
+  vrf {{Tenant}}
+  ip address virtual {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['SVI']}}
+
+{%endfor%}
+{%endfor%}
+
+
+
+
+interface vxlan1
+  vxlan source-interface Loopback1
+  vxlan udp-port 4789
+{% for Tenant in VXLAN['Tenants'] %}
+  vxlan vrf {{ Tenant }} vni {{ VXLAN['Tenants'][Tenant]['L3VNI']}}
+{%endfor%}
+{% for Tenant in VXLAN['Tenants'] %}
+{%   for L2VNI in VXLAN['Tenants'][Tenant]['L2VNI']%}
+  vxlan vlan {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VLANID']}} vni {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VNID']}}
+{%endfor%}
+{%endfor%}
+
+
+
+router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+  
+{% for Tenant in VXLAN['Tenants'] %}
+  vrf {{ Tenant }} 
+    rd {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}:{{ VXLAN['Tenants'][Tenant]['L3VNI']}}
+    route-target import evpn {{ VXLAN['Tenants'][Tenant]['L3VNI']}}:{{ VXLAN['Tenants'][Tenant]['L3VNI']}}
+    route-target export evpn {{ VXLAN['Tenants'][Tenant]['L3VNI']}}:{{ VXLAN['Tenants'][Tenant]['L3VNI']}}
+{%endfor%}
+
+{% for Tenant in VXLAN['Tenants'] %}
+{%   for L2VNI in VXLAN['Tenants'][Tenant]['L2VNI']%}
+  vlan {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VLANID']}}
+    rd auto
+    route-target both {{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VNID']}}:{{VXLAN['Tenants'][Tenant]['L2VNI'][L2VNI]['VNID']}}
+    redistribute learned
+{%endfor%}
+{%endfor%}
+

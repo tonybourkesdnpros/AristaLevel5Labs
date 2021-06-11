@@ -1,0 +1,18 @@
+---
+- hosts: DC1, DC2
+  gather_facts: no
+  tasks: 
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create interface configurations for both DCs 
+    template: # This is Jinja right here, and we pass "vars" into Jinja
+      src: "{{lookup('env','PWD')}}/templates/interfaces.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_interface.cfg"
+  - name: Upload interface configs
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_interface.cfg"
+  - name: Copy run start
+    eos_command:
+      commands: copy run start

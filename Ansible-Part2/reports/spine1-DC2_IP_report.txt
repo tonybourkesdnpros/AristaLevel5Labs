@@ -1,0 +1,9 @@
+This file contains the IP information (a la 'show ip interface brief') for spine1-DC2
+
+The IP address of loopback0 is 192.168.201.101
+The IP address of Ethernet2 is 192.168.203.1
+The IP address of Ethernet3 is 192.168.203.7
+The IP address of Ethernet4 is 192.168.203.13
+The IP address of Ethernet5 is 192.168.203.19
+The IP address of Ethernet6 is 192.168.203.25
+The IP address of Ethernet7 is 192.168.203.31

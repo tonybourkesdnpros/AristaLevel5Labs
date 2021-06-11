@@ -14,10 +14,9 @@ ip prefix-list LOOPBACK
     seq 40 permit 192.168.202.0/24 eq 32
     seq 50 permit 192.168.253.0/24 eq 32
 
-
-
 route-map LOOPBACK permit 10
    match ip address prefix-list LOOPBACK
+
 router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
    router-id {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}
 

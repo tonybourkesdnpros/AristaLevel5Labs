@@ -1,0 +1,8 @@
+This file contains the IP information (a la 'show ip interface brief') for borderleaf2-DC2
+
+The IP address of loopback0 is 192.168.201.21
+The IP address of loopback1 is 192.168.202.21
+The IP address of Ethernet3 is 192.168.203.30
+The IP address of Ethernet4 is 192.168.203.32
+The IP address of Ethernet5 is 192.168.203.34
+The IP address of Ethernet12 is 192.168.254.6
