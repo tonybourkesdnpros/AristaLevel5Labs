@@ -1,0 +1,54 @@
+leaf1-DC1:
+  interfaces:
+    management0: 192.168.0.21/24
+leaf2-DC1:
+  interfaces:
+    management0: 192.168.0.22/24
+leaf3-DC1:
+  interfaces:
+    management0: 192.168.0.23/24
+leaf4-DC1:
+  interfaces:
+    management0: 192.168.0.24/24
+borderleaf1-DC1:
+  interfaces:
+    management0: 192.168.0.25/24
+borderleaf2-DC1:
+  interfaces:
+    management0: 192.168.0.26/24
+leaf1-DC2:
+  interfaces:
+    management0: 192.168.0.31/24
+leaf2-DC2:
+  interfaces:
+    management0: 192.168.0.32/24
+leaf3-DC2:
+  interfaces:
+    management0: 192.168.0.33/24
+leaf4-DC2:
+  interfaces:
+    management0: 192.168.0.34/24
+borderleaf1-DC2:
+  interfaces:
+    management0: 192.168.0.35/24
+borderleaf2-DC2:
+  interfaces:
+    management0: 192.168.0.36/24
+spine1-DC1:
+  interfaces:
+    management0: 192.168.0.11/24
+spine2-DC1:
+  interfaces:
+    management0: 192.168.0.12/24
+spine3-DC1:
+  interfaces:
+    management0: 192.168.0.13/24
+spine1-DC2:
+  interfaces:
+    management0: 192.168.0.14/24
+spine2-DC2:
+  interfaces:
+    management0: 192.168.0.15/24
+spine3-DC2:
+  interfaces:
+    management0: 192.168.0.16/24

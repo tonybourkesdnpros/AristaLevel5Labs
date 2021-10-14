@@ -1,0 +1,8 @@
+{% for item in underlay[inventory_hostname]['interfaces'] %}
+interface {{ item }}
+   ip address {{ underlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][item]['mask']}}
+{% if 'Ethernet' in item %}
+   no switchport
+   mtu 9214
+{% endif %}
+{% endfor %}

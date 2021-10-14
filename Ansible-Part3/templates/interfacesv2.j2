@@ -1,0 +1,9 @@
+
+{% for iface in underlay[inventory_hostname]['interfaces']  %}
+interface {{ iface }}
+{% if 'thernet' in iface %}
+  mtu {{ underlay['global']['MTU']}}
+  no switchport
+{% endif %}
+  ip address {{ underlay[inventory_hostname]['interfaces'][iface]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][iface]['mask']}}
+{% endfor %}

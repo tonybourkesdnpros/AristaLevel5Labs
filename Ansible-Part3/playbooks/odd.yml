@@ -1,0 +1,6 @@
+---
+- hosts: right_DC1
+  gather_facts: no
+  tasks:
+  - name: Create template
+    debug: msg{{inventory_hostname}}

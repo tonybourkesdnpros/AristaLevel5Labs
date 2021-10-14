@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/baseline.yaml"
+      name: baseline
+  - name: Create Base Config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/baseline-cfg.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_ATD_BASE.cfg"

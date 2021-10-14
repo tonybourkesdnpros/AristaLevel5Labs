@@ -1,0 +1,14 @@
+
+router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+
+   neighbor DCI peer group
+   neighbor DCI remote-as 65000
+   neighbor DCI maximum-routes 12000
+
+
+{% for peer in underlay[inventory_hostname]['BGP']['DCI-peers'] %}
+   neighbor {{ peer }} peer group DCI
+{% endfor %}   
+
+   address-family ipv4
+     neighbor DCI activate

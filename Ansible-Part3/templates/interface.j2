@@ -1,0 +1,15 @@
+{% for item in underlay[inventory_hostname]['interfaces'] %}
+interface {{ item }}
+   ip address {{ underlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][item]['mask']}}
+{% if 'Ethernet' in item %}
+   no switchport
+{% endif %}
+{% endfor %}
+
+router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}
+
+{% for peer in underlay[inventory_hostname]['BGP']['spine-peers'] %}
+   neighbor {{ peer }} peer group SPINE_Underlay
+{% endfor %}   
+   redistribute connected route-map LOOPBACK

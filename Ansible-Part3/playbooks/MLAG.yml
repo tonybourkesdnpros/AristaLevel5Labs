@@ -1,0 +1,15 @@
+---
+- hosts: left_leafs
+  gather_facts: no
+  tasks:
+  - name: Upload MLAG config
+    eos_config:
+      src: "/home/coder/project/persist/AristaLevel5Labs/Ansible-Part2/configs/MLAG-left.cfg"
+      save_when: always
+- hosts: right_leafs
+  gather_facts: no
+  tasks:
+  - name: Upload MLAG config
+    eos_config:
+      src: "/home/coder/project/persist/AristaLevel5Labs/Ansible-Part2/configs/MLAG-right.cfg"
+      save_when: always

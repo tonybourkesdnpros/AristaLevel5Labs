@@ -1,0 +1,29 @@
+---
+- hosts: leafs_DC1
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create Leaf config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/leaf-underlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+- hosts: borderleafs_DC1, borderleafs_DC2
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create borderleaf config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/borderleaf.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"

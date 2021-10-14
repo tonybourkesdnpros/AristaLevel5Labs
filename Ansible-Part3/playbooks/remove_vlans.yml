@@ -1,0 +1,11 @@
+---
+- hosts: leafs_DC1, leafs_DC2
+  gather_facts: no
+  tasks:
+  - name: Create template
+    template:
+      src: "{{lookup('env','PWD')}}/templates/no-vlans.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_vlans.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_vlans.cfg"

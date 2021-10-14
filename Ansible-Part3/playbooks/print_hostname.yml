@@ -1,0 +1,7 @@
+---
+- hosts: leaf1-DC1, leaf1-DC2
+  gather_facts: no
+  tasks:
+  - name: "Which host are we running this playbook against? It is:"
+    debug: 
+      msg: "{{ inventory_hostname }}"

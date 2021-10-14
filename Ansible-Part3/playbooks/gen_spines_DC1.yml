@@ -1,0 +1,15 @@
+---
+- hosts: spines_DC1
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create Spine config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/spine-underlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"

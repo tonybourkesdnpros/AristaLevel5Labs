@@ -1,0 +1,5 @@
+This file contains the IP information (a la 'show ip interface brief') for {{ inventory_hostname }}
+
+{% for item in underlay[inventory_hostname]['interfaces'] %}
+The IP address of {{ item }} is {{ underlay[inventory_hostname]['interfaces'][item]['ipv4'] }}
+{% endfor %}
