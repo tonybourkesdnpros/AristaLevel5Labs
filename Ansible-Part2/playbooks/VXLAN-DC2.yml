@@ -1,0 +1,19 @@
+---
+- hosts: leafs_DC2
+  gather_facts: no
+  tasks: 
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/VXLAN-overlay-DCs.yml"
+      name: VXLAN
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create VXLAN Overlay Tenant configs 
+    template: # This is Jinja right here, and we pass "vars" into Jinja
+      src: "{{lookup('env','PWD')}}/templates/VXLAN-overlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_VXLAN.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_VXLAN.cfg"

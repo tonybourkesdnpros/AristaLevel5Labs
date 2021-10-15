@@ -30,13 +30,36 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
 
 
 
-   bgp listen range 192.168.0.0/16 peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+  {% if 'DC1' in inventory_hostname %}
+bgp listen range {{ underlay['global']['DC1']['p2p']}} peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+  {% endif %}
+  {% if 'DC2' in inventory_hostname %}
+bgp listen range {{ underlay['global']['DC2']['p2p']}} peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+  {% endif %}  
    neighbor LEAF_Underlay peer group
    neighbor LEAF_Underlay send-community
    neighbor LEAF_Underlay maximum-routes 12000
 
+  
+
+   neighbor EVPN peer group
+
+  {% if 'DC1' in inventory_hostname %}
+bgp listen range {{ underlay['global']['DC1']['lo0']}} peer-group EVPN peer-filter LEAF-AS-RANGE
+  {% endif %}
+  {% if 'DC2' in inventory_hostname %}
+bgp listen range {{ underlay['global']['DC2']['lo0']}} peer-group EVPN peer-filter LEAF-AS-RANGE
+  {% endif %}  
+  
+   neighbor EVPN update-source Loopback0
+   neighbor EVPN ebgp-multihop 3
+   neighbor EVPN send-community extended
+   neighbor EVPN maximum-routes 0
+
    redistribute connected route-map LOOPBACK
    
+   address-family evpn
+     neighbor EVPN activate
    address-family ipv4
      neighbor LEAF_Underlay activate
      redistribute connected route-map LOOPBACK

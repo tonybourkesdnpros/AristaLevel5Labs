@@ -1,3 +1,5 @@
+service routing protocols model multi-agent
+
 {% for item in underlay[inventory_hostname]['interfaces'] %}
 interface {{ item }}
    ip address {{ underlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][item]['mask']}}
@@ -25,10 +27,10 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
    distance bgp 20 200 200
 
 
-   neighbor SPINE_Underlay peer group  
-   neighbor SPINE_Underlay remote-as {{ underlay[inventory_hostname]['BGP']['spine-ASN'] }}
-   neighbor SPINE_Underlay send-community
-   neighbor SPINE_Underlay maximum-routes 12000
+   neighbor Underlay peer group  
+   neighbor Underlay remote-as {{ underlay[inventory_hostname]['BGP']['spine-ASN'] }}
+   neighbor Underlay send-community
+   neighbor Underlay maximum-routes 12000
 
    neighbor LEAF_Peer peer group
    neighbor LEAF_Peer remote-as {{ underlay[inventory_hostname]['BGP']['ASN'] }}
@@ -37,16 +39,43 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
 
 
 {% for peer in underlay[inventory_hostname]['BGP']['spine-peers'] %}
-   neighbor {{ peer }} peer group SPINE_Underlay
+   neighbor {{ peer }} peer group Underlay
 {% endfor %}   
 {% if underlay[inventory_hostname]['MLAG'] == "Odd" %}
    neighbor 192.168.255.2 peer group LEAF_Peer
    {% else %}
    neighbor 192.168.255.1 peer group LEAF_Peer
 {% endif %}
+
+  neighbor EVPN peer group
+  {% if 'DC1' in inventory_hostname %}
+   neighbor EVPN remote-as {{ underlay['global']['DC1']['spine_ASN']}} 
+  {% endif %}  
+  {% if 'DC2' in inventory_hostname %}
+   neighbor EVPN remote-as {{ underlay['global']['DC2']['spine_ASN']}} 
+  {% endif %}  
+
+ neighbor EVPN update-source Loopback0
+ neighbor EVPN allowas-in 1
+ neighbor EVPN ebgp-multihop 3
+ neighbor EVPN send-community extended
+ neighbor EVPN maximum-routes 12000
+  
+{% if 'DC1' in inventory_hostname %}
+{% for peer in underlay['global']['DC1']['spine_peers'] %}
+   neighbor {{ peer }} peer group EVPN
+{% endfor %}   
+  {% endif %}  
+{% if 'DC2' in inventory_hostname %}
+{% for peer in underlay['global']['DC2']['spine_peers'] %}
+   neighbor {{ peer }} peer group EVPN
+{% endfor %}   
+  {% endif %}  
+ !
+   address-family evpn
+     neighbor EVPN activate
    
-   redistribute connected route-map LOOPBACK
    address-family ipv4
-     neighbor SPINE_Underlay activate
+     neighbor Underlay activate
      neighbor LEAF_Peer activate
      redistribute connected route-map LOOPBACK

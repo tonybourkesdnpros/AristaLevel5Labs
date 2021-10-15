@@ -1,5 +1,5 @@
 ---
-- hosts: DC1
+- hosts: leaf1-DC1, leaf2-DC2
   gather_facts: no
   tasks: 
   - name: Register variables
@@ -8,7 +8,7 @@
       name: underlay
   - name: Create interface configurations 
     template: # This is Jinja right here, and we pass "vars" into Jinja
-      src: "{{lookup('env','PWD')}}/templates/interfacesv2.j2"
+      src: "{{lookup('env','PWD')}}/templates/interfaces.j2"
       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_interface.cfg"
   - name: Upload configs
     eos_config:

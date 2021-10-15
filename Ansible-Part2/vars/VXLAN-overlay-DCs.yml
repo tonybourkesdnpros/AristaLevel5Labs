@@ -1,4 +1,3 @@
-
 Tenants:
   Picard:
     L3VNI: 10000
@@ -33,14 +32,25 @@ Tenants:
         VNID: 30002
         VLANID: 302
         SVI: 10.10.20.1/24
-  Pike:
-    L3VNI: 40000
+  # Pike:
+  #   L3VNI: 40000
+  #   L2VNI: 
+  #     DMZ: 
+  #       VNID: 40001
+  #       VLANID: 401
+  #       SVI: 10.10.200.1/24
+  #     Backup:
+  #       VNID: 40004
+  #       VLANID: 402
+  #       SVI: 10.10.100.1/24
+  Burnam:
+    L3VNI: 50000
     L2VNI: 
       DMZ: 
-        VNID: 40001
-        VLANID: 401
-        SVI: 10.10.200.1/24
+        VNID: 50001
+        VLANID: 501
+        SVI: 10.10.201.1/24
       Backup:
-        VNID: 40004
-        VLANID: 402
-        SVI: 10.10.100.1/24
+        VNID: 50004
+        VLANID: 502
+        SVI: 10.10.202.1/24
