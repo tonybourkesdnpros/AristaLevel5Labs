@@ -96,7 +96,7 @@ leaf2:
       ipv4: 192.168.101.12
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.11
+      ipv4: 192.168.102.12
       mask: 32
     Ethernet3:
       ipv4: 192.168.103.6
@@ -146,7 +146,7 @@ leaf4:
       ipv4: 192.168.101.14
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.13
+      ipv4: 192.168.102.14
       mask: 32
     Ethernet3: 
       ipv4: 192.168.103.18

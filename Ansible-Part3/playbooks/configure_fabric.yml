@@ -56,7 +56,7 @@
       state: directory
   - name: Create Leaf config
     template:
-      src: "{{lookup('env','PWD')}}/templates/leaf-underlay.j2"
+      src: "{{lookup('env','PWD')}}/templates/leaf-underlay-noMLAG.j2"
       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_leaf-underlay.cfg"
   # - name: Copy ATD_Base
   #   template:

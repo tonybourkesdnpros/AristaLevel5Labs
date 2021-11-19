@@ -32,17 +32,17 @@ Tenants:
         VNID: 30002
         VLANID: 302
         SVI: 10.10.20.1/24
-  # Pike:
-  #   L3VNI: 40000
-  #   L2VNI: 
-  #     DMZ: 
-  #       VNID: 40001
-  #       VLANID: 401
-  #       SVI: 10.10.200.1/24
-  #     Backup:
-  #       VNID: 40004
-  #       VLANID: 402
-  #       SVI: 10.10.100.1/24
+  Pike:
+    L3VNI: 40000
+    L2VNI: 
+      DMZ: 
+        VNID: 40001
+        VLANID: 401
+        SVI: 10.10.200.1/24
+      Backup:
+        VNID: 40004
+        VLANID: 402
+        SVI: 10.10.100.1/24
   Burnam:
     L3VNI: 50000
     L2VNI: 
