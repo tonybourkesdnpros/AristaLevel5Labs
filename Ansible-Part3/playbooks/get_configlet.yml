@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+
+  - name: '#03 - Collect confilgets facts from {{inventory_hostname}}'
+    cv_facts:
+      facts:
+        configlets
+    register: FACTS_CONFIGLETS

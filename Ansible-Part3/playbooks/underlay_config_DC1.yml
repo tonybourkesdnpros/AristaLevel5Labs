@@ -1,31 +1,32 @@
 ---
-- hosts: spines_DC1
+- hosts: spines
   gather_facts: no
   tasks:
   - name: Register variables (underlay)
     include_vars:
       file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
       name: underlay
-  - name: Register variables (baseline)
-    include_vars:
-      file: "{{lookup('env','PWD')}}/vars/baseline.yaml"
-      name: baseline
+  # - name: Register variables (baseline)
+  #   include_vars:
+  #     file: "{{lookup('env','PWD')}}/vars/baseline.yaml"
+  #     name: baseline
   - name: Create config directory
     file:
       path: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}"
       state: directory
+
   - name: Create Spine config
     template:
       src: "{{lookup('env','PWD')}}/templates/spine-underlay.j2"
       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_spine-underlay.cfg"
-  - name: Copy ATD_Base
-    template:
-      src: "{{lookup('env','PWD')}}/templates/ATD-BASE.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_ATD_BASE.cfg"
-  - name: Baseline Config
-    template:
-      src: "{{lookup('env','PWD')}}/templates/baseline-cfg.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_baseline.cfg"
+  # - name: Copy ATD_Base
+  #   template:
+  #     src: "{{lookup('env','PWD')}}/templates/ATD-BASE.j2"
+  #     dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_ATD_BASE.cfg"
+  # - name: Baseline Config
+  #   template:
+  #     src: "{{lookup('env','PWD')}}/templates/baseline-cfg.j2"
+  #     dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_baseline.cfg"
   - name: Assemble config
     assemble:
       src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/"
@@ -33,18 +34,18 @@
   - name: Upload config
     eos_config:
       src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_final.cfg"
-      replace: config
-- hosts: leafs_DC1
+      #replace: config
+- hosts: leafs
   gather_facts: no
   tasks:
   - name: Register variables (underlay)
     include_vars:
       file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
       name: underlay
-  - name: Register variables (baseline)
-    include_vars:
-      file: "{{lookup('env','PWD')}}/vars/baseline.yaml"
-      name: baseline
+  # - name: Register variables (baseline)
+  #   include_vars:
+  #     file: "{{lookup('env','PWD')}}/vars/baseline.yaml"
+  #     name: baseline
   - name: Register variables (VXLAN)
     include_vars:
       file: "{{lookup('env','PWD')}}/vars/VXLAN-overlay-DCs.yml"
@@ -57,14 +58,14 @@
     template:
       src: "{{lookup('env','PWD')}}/templates/leaf-underlay.j2"
       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_leaf-underlay.cfg"
-  - name: Copy ATD_Base
-    template:
-      src: "{{lookup('env','PWD')}}/templates/ATD-BASE.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_ATD_BASE.cfg"
-  - name: Baseline Config
-    template:
-      src: "{{lookup('env','PWD')}}/templates/baseline-cfg.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_baseline.cfg"
+  # - name: Copy ATD_Base
+  #   template:
+  #     src: "{{lookup('env','PWD')}}/templates/ATD-BASE.j2"
+  #     dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_ATD_BASE.cfg"
+  # - name: Baseline Config
+  #   template:
+  #     src: "{{lookup('env','PWD')}}/templates/baseline-cfg.j2"
+  #     dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}/{{inventory_hostname}}_baseline.cfg"
   - name: Create VXLAN Overlay Tenant configs 
     template: # This is Jinja right here, and we pass "vars" into Jinja
       src: "{{lookup('env','PWD')}}/templates/VXLAN-overlay.j2"
@@ -76,32 +77,32 @@
   - name: Upload config
     eos_config:
       src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_final.cfg"
-      replace: config
-- hosts: left_leafs
-  gather_facts: no
-  tasks:
-  - name: Upload MLAG config
-    eos_config:
-      src: "{{lookup('env','PWD')}}/configs/Static/MLAG-left.cfg"
-      save_when: always
-- hosts: right_leafs
-  gather_facts: no
-  tasks:
-  - name: Upload MLAG config
-    eos_config:
-      src: "{{lookup('env','PWD')}}/configs/Static/MLAG-right.cfg"
-      save_when: always
-- hosts: borderleafs_DC1
-  gather_facts: no
-  tasks:
-  - name: Register variables
-    include_vars:
-      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
-      name: underlay
-  - name: Create borderleaf config
-    template:
-      src: "{{lookup('env','PWD')}}/templates/borderleaf.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"
-  - name: Upload config
-    eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"
+    #  replace: config
+# - hosts: left_leafs
+#   gather_facts: no
+#   tasks:
+#   - name: Upload MLAG config
+#     eos_config:
+#       src: "{{lookup('env','PWD')}}/configs/Static/MLAG-left.cfg"
+#       save_when: always
+# - hosts: right_leafs
+#   gather_facts: no
+#   tasks:
+#   - name: Upload MLAG config
+#     eos_config:
+#       src: "{{lookup('env','PWD')}}/configs/Static/MLAG-right.cfg"
+#       save_when: always
+# - hosts: borderleafs_DC1
+#   gather_facts: no
+#   tasks:
+#   - name: Register variables
+#     include_vars:
+#       file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+#       name: underlay
+#   - name: Create borderleaf config
+#     template:
+#       src: "{{lookup('env','PWD')}}/templates/borderleaf.j2"
+#       dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"
+#   - name: Upload config
+#     eos_config:
+#       src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"

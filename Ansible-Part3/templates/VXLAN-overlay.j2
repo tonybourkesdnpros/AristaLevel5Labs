@@ -58,3 +58,7 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
 {%endfor%}
 {%endfor%}
 
+  address-family evpn
+    neighbor EVPN activate
+
+

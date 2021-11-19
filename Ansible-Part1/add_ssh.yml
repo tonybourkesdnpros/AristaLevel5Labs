@@ -2,15 +2,15 @@
   - hosts: all
     gather_facts: no
     tasks:
-    - name: Add User
-      eos_user:
-        name: automator 
-        nopassword: yes
-        privilege: 15
-        role: network-admin
-        state: present
+    # - name: Add User
+    #   eos_user:
+    #     name: automator 
+    #     nopassword: yes
+    #     privilege: 15
+    #     role: network-admin
+    #     state: present
     - name: Add SSH key
       eos_user:
-        name: automator
+        name: arista
         sshkey: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
         state: present
