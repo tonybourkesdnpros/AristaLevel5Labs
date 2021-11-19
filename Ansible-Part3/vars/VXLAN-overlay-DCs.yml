@@ -1,5 +1,5 @@
 Tenants:
-  Picard:
+  Red:
     L3VNI: 10000
     L2VNI:
       DMZ:
@@ -10,7 +10,7 @@ Tenants:
         VNID: 10002
         VLANID: 102
         SVI: 10.10.20.1/24  
-  Kirk:
+  Blue:
     L3VNI: 20000
     L2VNI:
       DMZ:
@@ -21,7 +21,7 @@ Tenants:
         VNID: 20002
         VLANID: 202
         SVI: 10.10.20.1/24  
-  Janeway:  
+  Green:  
     L3VNI: 30000
     L2VNI:
       DMZ:
@@ -32,7 +32,7 @@ Tenants:
         VNID: 30002
         VLANID: 302
         SVI: 10.10.20.1/24
-  Pike:
+  Purple:
     L3VNI: 40000
     L2VNI: 
       DMZ: 
@@ -43,7 +43,7 @@ Tenants:
         VNID: 40004
         VLANID: 402
         SVI: 10.10.100.1/24
-  Burnam:
+  Orange:
     L3VNI: 50000
     L2VNI: 
       DMZ: 
