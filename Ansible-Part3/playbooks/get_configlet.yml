@@ -1,10 +1,38 @@
 ---
-- hosts: all
+- name: Download ATD-INFRA configlet
+  hosts: CloudVision
+  connection: local
   gather_facts: no
-  tasks:
+  vars: 
+    authURL: "https://192.168.0.5/cvpservice/login/authenticate.do"
+    configlet_url: "https://192.168.0.5/cvpservice/configlet/getConfigletByName.do?name="
+    configlet_name: "ATD-INFRA"
+    
+    CVP_password: "arista9wtf"
 
-  - name: '#03 - Collect confilgets facts from {{inventory_hostname}}'
-    cv_facts:
-      facts:
-        configlets
-    register: FACTS_CONFIGLETS
+  tasks:
+  - name: Authenticate and grab token
+    uri:
+      method: POST
+      validate_certs: no
+      return_content: yes
+      url: "{{ authURL }}"
+      body_format: json
+      body: 
+        password: "{{CVP_password}}"
+        userId: arista
+    register: token
+  - name: Get Configlet from CloudVision
+    uri:
+      method: GET
+      validate_certs: no
+      return_content: yes
+      url: "{{configlet_url}}{{configlet_name}}"
+      headers:
+        Cookie: "{{token.cookies_string}}"
+    register: configlet_contents
+  - name: Write configlet to file
+    copy:  
+      content: "{{ configlet_contents.content | from_json | json_query('config')}}"
+      dest: "configs/Static/ATD-INFRA.cfg"
+
